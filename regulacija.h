@@ -5,6 +5,12 @@
 #define FCY 29491200ULL
 #endif
 
+#define BIG     1
+#define SMALL   2
+#define ROBOT BIG
+
+
+#if (ROBOT == BIG)
 #define PI	3.1415926535897932384626433832795
 #define d_tocka	69.1978//69.19781//69.200//68.695// precnik odometrijskog tocka
 #define D_tocka	301.7//299.350//301.7//302//rastojanje izmedju tockova
@@ -16,10 +22,22 @@
 #define Gd_D	65//37//48//18
 #define Gp_T	2.5//0.7//2.5//1.2 //0.8//rotacija
 #define Gd_T	50//20//65//35//12
+#elif ROBOT == SMALL
+#define PI	3.1415926535897932384626433832795
+#define d_tocka	69.1978//69.19781//69.200//68.695// precnik odometrijskog tocka
+#define D_tocka	301.7//299.350//301.7//302//rastojanje izmedju tockova
+
+//enkoder daje 5000 inkremenata po krugu
+#define K1	(long)(40000.0f * D_tocka / d_tocka)  //broj ikremenata po krugu
+#define K2	(long)(20000.0f / (d_tocka * PI))  //za konverziju mm u inkremente == 121.26
+#define Gp_D	2.5//1.2//1.4//1.2//distanca
+#define Gd_D	65//37//48//18
+#define Gp_T	2.5//0.7//2.5//1.2 //0.8//rotacija
+#define Gd_T	50//20//65//35//12
+#endif
+
 /*pROVERI ENKODER: Part no:MA5D1N4FBK1SA0; Type no.: sca24-5000-N-04-09-64-01-S-00*/
-//#define STATUS_IDLE     'I'
-//#define STATUS_MOVING   'M'
-//#define STATUS_STUCK    'S'
+
 enum States
 {
     STATUS_IDLE,
