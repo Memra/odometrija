@@ -24,11 +24,12 @@ static volatile long long PWML, PWMD;
 static volatile long t_ref = 0, d_ref = 0;
 static volatile float v_ref;
 
+
 static volatile long d, t;
 static volatile long sint, cost;
 static volatile long x, y;
 static volatile long greska;
-static volatile int brzina, commande_distance, commande_rotation;
+static volatile signed long brzina, commande_distance, commande_rotation;
 
 static enum States currentStatus = STATUS_IDLE;
 
@@ -105,49 +106,52 @@ void __attribute__((__interrupt__, auto_psv)) _T1Interrupt(void)
                 cost = sinus[t];
             }
 
-    // x, y -> predjeno po x i y koordinati u zadnjoj periodi (deltax, deltay)
-    x = d * cost;
-    y = d * sint;
+		// x, y -> predjeno po x i y koordinati u zadnjoj periodi (deltax, deltay)
+		x = d * cost;
+		y = d * sint;
 
-    // x, y je min 32767
-    Xlong += x;
-    Ylong += y;
+		// x, y je min 32767
+		Xlong += x;
+		Ylong += y;
 
-    //izacunavanje trenutne pozicije [mm]
-    // pre:
-    /*
-    X = (((long long)Xlong / 2) / 32768) / K2;
-    Y = (((long long)Ylong / 2) / 32768) / K2;
-     */
-    // pretvaranje u inkremente
-    X = (((long long)Xlong / 2) / 32768);
-    // pretvaranje u milimetre
-    X /= K2;
-    Y = (((long long)Ylong / 2) / 32768);
-    Y /= K2;
+		//izacunavanje trenutne pozicije [mm]
+		// pre:
+		
+		//X = (((long long)Xlong / 2) / 32768) / K2;
+		//Y = (((long long)Ylong / 2) / 32768) / K2;
+		
 
-    //regulator rastojanja
-    brzina = (vL + vR) / 2; // srednja vrednost predjenih inkremenata u zadnjoj periodi -> v = s/t, brzina
-    greska = d_ref - L;
-    zaglavL = (greska >= 0 ? greska : -greska);
+		// pretvaranje u inkremente
+		X = (((long long)Xlong / 2) / 32768);
+		// pretvaranje u milimetre
+		X /= K2;
+		Y = (((long long)Ylong / 2) / 32768);
+		Y /= K2;
 
-    commande_distance = greska * Gp_D - Gd_D * brzina;
+		//regulator rastojanja
+		brzina = (vL + vR) / 2; // srednja vrednost predjenih inkremenata u zadnjoj periodi -> v = s/t, brzina
+		greska = d_ref - L;
+		zaglavL = (greska >= 0 ? greska : -greska);
 
-    //regulator orjentacije
-    brzina = vL - vR;
-    greska = (orientation - t_ref) % K1;
+		commande_distance = greska * Gp_D - Gd_D * brzina;
 
-    if(greska > K1/2)
-        greska -= K1;
-    if(greska < -K1/2)
-        greska += K1;
+		//regulator orjentacije
+		brzina = vL - vR;
+		greska = (orientation - t_ref) % K1;
 
-    zaglavR = (greska >= 0 ? greska : -greska);
-    commande_rotation = greska * Gp_T - brzina * Gd_T;
+		if(greska > K1/2)
+			greska -= K1;
+		if(greska < -K1/2)
+			greska += K1;
 
-    // ukupan PWM dobija se superpozicijom uzimajuci u obzir oba regulatora
-    // commande_distance = regulator rastojanja
-    // commande_rotation = regulator orijentacije
+		zaglavR = (greska >= 0 ? greska : -greska);
+		commande_rotation = greska * Gp_T - brzina * Gd_T;
+
+		// ukupan PWM dobija se superpozicijom uzimajuci u obzir oba regulatora
+		// commande_distance = regulator rastojanja
+		// commande_rotation = regulator orijentacije
+
+
     PWML = commande_distance - commande_rotation;
     PWMD = commande_distance + commande_rotation;
 
@@ -258,7 +262,7 @@ void setPosition(int X, int Y, int orientation)
 
 void sendStatusAndPosition(void)
 {
-    long tmpO = orientation;
+    int tmpO;
 
     // mora seljacki nacin zato sto je govno govnasto
     if(currentStatus == STATUS_ERROR)
@@ -278,7 +282,7 @@ void sendStatusAndPosition(void)
     putch(Y >> 8);
     putch(Y);
 
-    tmpO *= 360 / K1;
+    tmpO = orientation * 360 / K1 + 0.5;
     putch(tmpO >> 8);
     putch(tmpO);
 }
@@ -290,6 +294,7 @@ void setSpeedAccel(float v)
     accel = vmax / 500;	//ako nam faza ubrzanja traje 1000ms
     alfa = 2 * accel;
 }
+
 
 enum States getStatus(void)
 {
@@ -363,7 +368,7 @@ static char getCommand(void)
 static char checkStuckCondition(void)
 {
  
-    /*if ((zaglavL / 128 > brzinaL) || (zaglavR / 128 > brzinaL)) //16,32
+    if ((zaglavL / 128 > brzinaL) || (zaglavR / 128 > brzinaL)) //16,32
     {
         //ukopaj se u mestu
         d_ref = L;
@@ -374,7 +379,7 @@ static char checkStuckCondition(void)
         __delay_ms(50);
         return 0;
     }
-*/
+
     return 1;
 }
 
@@ -499,13 +504,13 @@ void kretanje_pravo(int duzina, unsigned char krajnja_brzina)
     long D0, D1, D2;
     float v_vrh, v_end, v0;
     char predznak;
-
+//Ne moze na manjim rastojanjima od 50cm da ide brzimom koju zelis, ograniceno je na /3 brzine
     if((duzina < 500) && (duzina > -500))
         setSpeedAccel(K2 / 3);
 
     v0 = v_ref;
     v_end = vmax * krajnja_brzina / 256;
-    predznak = (duzina >= 0 ? 1 : -1);
+    predznak = (duzina >= 0) ? 1 : -1;
     L_dist = (long)duzina * K2; // konverzija u inkremente
 
     T1 = (vmax - v_ref) / accel;
@@ -515,7 +520,7 @@ void kretanje_pravo(int duzina, unsigned char krajnja_brzina)
     T3 = (vmax - v_end) / accel;
     L3 = vmax * T3 - accel * T3 * (T3 / 2);
 
-    if((L1 + L3) < predznak * L_dist)
+    if((L1 + L3) < (long)predznak * L_dist)
     {
         //moze da dostigne vmax
         L2 = predznak * L_dist - L1 - L3;
