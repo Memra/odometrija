@@ -224,6 +224,7 @@ void putch(unsigned char c)
     //WriteUART1(c);
     while(U1STAbits.UTXBF);
     U1TXREG = c;
+    __delay_ms(1);
 }
 
 void SendLong(long num)

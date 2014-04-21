@@ -6,9 +6,10 @@
 #include <p33FJ128MC802.h>
 
 _FWDT (FWDTEN_OFF);
-//_FOSCSEL(FNOSC_PRIPLL);
-_FOSCSEL(FNOSC_FRCPLL);			// Internal FRC oscillator with PLL
-//_FOSCSEL(FNOSC_PRIPLL);
+_FOSCSEL(FNOSC_PRI);	// primarni bez plla
+_FOSC(FCKSM_CSECMD & OSCIOFNC_ON & POSCMD_XT & IOL1WAY_OFF);
+_FPOR(PWMPIN_ON &/* & BOREN_OFF & */HPOL_ON & LPOL_ON & FPWRT_PWR2 & ALTI2C_ON);
+
 
 void TimerInit(void)
 {
@@ -94,11 +95,17 @@ int main(void)
     CLKDIVbits.PLLPOST=0;   /* N1 = 2 */
     CLKDIVbits.PLLPRE=0;    /* N2 = 2 */
 
-    while(!OSCCONbits.LOCK); // wait for PLL to lock
+    __builtin_write_OSCCONH(0b011);
+    __builtin_write_OSCCONL (OSCCONL | (1<<0)); 	//OSWEN
+    //wait for PLL lock -> wait to new settings become available
+    while (OSCCONbits.COSC != 0b011);
+    //wait for PLL lock
+    while (OSCCONbits.LOCK != 0b1);
+
+
 
     AD1PCFGL = 0xFFFF;// all PORT Digital
 
-    __builtin_write_OSCCONL(OSCCON & 0xDF);
     RPINR18bits.U1RXR = 0;		//UART1 RX na RP0- pin 4
     RPOR0bits.RP1R = 3;			//UART1 TX na RP1- pin 5
     RPINR14bits.QEA1R = 2;		//QEI1A na RP2
@@ -107,16 +114,14 @@ int main(void)
     RPINR16bits.QEA2R = 4;		//QEI2A na RP4
     RPINR16bits.QEB2R = 7;		//QEI2B na RP7
 
-    __builtin_write_OSCCONL(OSCCON | (1<<6));
-
     //INTCON1bits.NSTDIS = 1; // zabranjeni ugnjezdeni prekidi
     
     PortInit();
     UART_Init(57600);
     TimerInit();
     QEIinit();
-    //CloseMCPWM();
-    PWMinit();
+    CloseMCPWM();
+    //PWMinit();
 
     resetDriver();
 
@@ -225,11 +230,6 @@ int main(void)
             case 's':
                 stop();
                 CloseMCPWM();
-
-                break;
-
-            case 'R':
-                resetDriver();
 
                 break;
 
