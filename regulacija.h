@@ -9,7 +9,6 @@
 #define SMALL   2
 #define ROBOT BIG
 
-
 #if (ROBOT == BIG)
 #define PI	3.1415926535897932384626433832795
 #define d_tocka	69.1978//69.19781//69.200//68.695// precnik odometrijskog tocka
@@ -46,6 +45,8 @@ enum States
     STATUS_STUCK,
     STATUS_ERROR
 };
+
+void jebiSe(void);
 
 void resetDriver(void);
 // zadavanje pozicije

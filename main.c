@@ -4,11 +4,13 @@
 #include "uart.h"
 #include "pwm.h"
 #include <p33FJ128MC802.h>
+#include <libpic30.h>
+
 
 _FWDT (FWDTEN_OFF);
 _FOSCSEL(FNOSC_PRI);	// primarni bez plla
-_FOSC(FCKSM_CSECMD & OSCIOFNC_ON & POSCMD_XT & IOL1WAY_OFF);
-_FPOR(PWMPIN_ON &/* & BOREN_OFF & */HPOL_ON & LPOL_ON & FPWRT_PWR2 & ALTI2C_ON);
+_FOSC(FCKSM_CSECMD & OSCIOFNC_ON & POSCMD_HS & IOL1WAY_OFF);
+_FPOR(PWMPIN_ON  & HPOL_ON & LPOL_ON & FPWRT_PWR128 & ALTI2C_ON);
 
 
 void TimerInit(void)
@@ -24,7 +26,7 @@ void TimerInit(void)
     TMR1 = 0;
     PR1 = 29479;    // ide na 1ms
 
-    IPC0bits.T1IP = 2; // prioritet prekida == 2
+    IPC0bits.T1IP = 5; // prioritet prekida == 2
     IFS0bits.T1IF = 0;// Clear Timer1 Interrupt Flag
     IEC0bits.T1IE = 1;// Enable Timer1 interrupt
     T1CONbits.TON = 1;
@@ -94,15 +96,13 @@ int main(void)
     PLLFBDbits.PLLDIV = 30;   /* M = PLLFBD + 2 */
     CLKDIVbits.PLLPOST=0;   /* N1 = 2 */
     CLKDIVbits.PLLPRE=0;    /* N2 = 2 */
-
+    //while (OSCCONbits.LOCK != 0b1);
     __builtin_write_OSCCONH(0b011);
     __builtin_write_OSCCONL (OSCCONL | (1<<0)); 	//OSWEN
     //wait for PLL lock -> wait to new settings become available
     while (OSCCONbits.COSC != 0b011);
     //wait for PLL lock
     while (OSCCONbits.LOCK != 0b1);
-
-
 
     AD1PCFGL = 0xFFFF;// all PORT Digital
 
@@ -117,8 +117,9 @@ int main(void)
     //INTCON1bits.NSTDIS = 1; // zabranjeni ugnjezdeni prekidi
     
     PortInit();
-    UART_Init(57600);
+    
     TimerInit();
+    UART_Init(57600);
     QEIinit();
     CloseMCPWM();
     //PWMinit();

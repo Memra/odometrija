@@ -112,6 +112,7 @@
         <property key="list-section-info" value="false"/>
         <property key="list-source" value="false"/>
         <property key="list-symbols" value="false"/>
+        <property key="oXC16asm-extra-opts" value=""/>
         <property key="oXC16asm-list-to-file" value="false"/>
         <property key="omit-debug-dirs" value="false"/>
         <property key="omit-forms" value="false"/>
@@ -126,10 +127,10 @@
         <property key="boot-flash" value="no_flash"/>
         <property key="boot-ram" value="no_ram"/>
         <property key="boot-write-protect" value="no_write_protect"/>
-        <property key="enable-check-sections" value="false"/>
+        <property key="enable-check-sections" value="true"/>
         <property key="enable-data-init" value="true"/>
-        <property key="enable-default-isr" value="true"/>
-        <property key="enable-handles" value="true"/>
+        <property key="enable-default-isr" value="false"/>
+        <property key="enable-handles" value="false"/>
         <property key="enable-pack-data" value="true"/>
         <property key="extra-lib-directories" value=".."/>
         <property key="general-code-protect" value="no_code_protect"/>
@@ -168,7 +169,7 @@
       <PICkit2PlatformTool>
         <property key="pk2settings.3state" value="false"/>
         <property key="pk2settings.preserveee" value="false"/>
-        <property key="pk2settings.setvddvoltage" value=""/>
+        <property key="pk2settings.setvddvoltage" value="3.25"/>
         <property key="pk2settings.userpgmexec" value="true"/>
         <property key="pk2settings.usetargetpower" value="false"/>
       </PICkit2PlatformTool>

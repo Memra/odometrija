@@ -22,8 +22,8 @@ void UART_Init(long baud)
     IFS0bits.U1RXIF = 0;
 
     _U1RXIE = 1;    		//Enable UART1 Rx interrupt
-    IPC2bits.U1RXIP = 6;	//prioritet nije 7 zato sto se onda ne mogu iskljuciti prekidi
-    IPC0bits.T1IP = 1; 		//T1 interrupt priority set to minimum
+    IPC2bits.U1RXIP = 1;	//prioritet nije 7 zato sto se onda ne mogu iskljuciti prekidi
+    //IPC0bits.T1IP = 1; 		//T1 interrupt priority set to minimum
 
     rx_index1 = rx_index2 = rxCounter = 0;
 
@@ -32,6 +32,11 @@ void UART_Init(long baud)
 
     __delay_ms(100);
 }
+/*
+void UART_Init(unsigned long baud)
+{
+    U1BRG = (double)FCY / (16 * baud) - 1;
+}*/
 
 /**********************************************************************
 * Function Name     : BusyUART1
@@ -287,16 +292,21 @@ void NewLine(void)
 }
 static unsigned char status;
 
-void __attribute__((__interrupt__, no_auto_psv)) _U1RXInterrupt(void)
+void __attribute__((__interrupt__, auto_psv)) _U1TXInterrupt(void)
+{
+    IFS0bits.U1TXIF = 0;
+}
+
+void __attribute__((__interrupt__, auto_psv)) _U1RXInterrupt(void)
 {
     IFS0bits.U1RXIF = 0;
-
+    INTCON1bits.NSTDIS = 1; // zabranjeni ugnjezdeni prekidi
     status = U1STAbits.FERR | U1STAbits.PERR | U1STAbits.OERR;
     rxData = U1RXREG;
 
     if(status == 0)
     {
-        if(++rx_index1 == RX_BUF_LEN)
+        if(++rx_index1 >= RX_BUF_LEN)
             rx_index1 = 0;
 
         rx_buf[rx_index1] = rxData;
@@ -305,6 +315,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _U1RXInterrupt(void)
     }
 
     U1STAbits.OERR = 0;
+    INTCON1bits.NSTDIS = 0; // zabranjeni ugnjezdeni prekidi
 }
 
 unsigned char getch(void)
@@ -312,7 +323,7 @@ unsigned char getch(void)
     while(rxCounter == 0);
     //while(rx_index1 == rx_index2);	//wait for character to be received
     SRbits.IPL = 7;
-    if(++rx_index2 == RX_BUF_LEN)
+    if(++rx_index2 >= RX_BUF_LEN)
         rx_index2 = 0;
     
     rxCounter--;

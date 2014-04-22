@@ -46,7 +46,7 @@ static inline void DesniPWM(unsigned int PWM)
 // **********************************************************************
 // ODOMETRIJA (ide na 1ms)
 // **********************************************************************
-void __attribute__((__interrupt__, auto_psv)) _T1Interrupt(void)
+void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void)
 {
     sys_time++;
 
@@ -191,6 +191,12 @@ void __attribute__((__interrupt__, auto_psv)) _T1Interrupt(void)
    // }	//KRAJ REGULACIJE
 
     IFS0bits.T1IF = 0;    /* Clear Timer interrupt flag */
+}
+
+void jebiSe(void)
+{
+    putch(positionL);
+    putch(positionR);
 }
 
 void resetDriver(void)
