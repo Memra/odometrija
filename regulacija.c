@@ -43,12 +43,27 @@ static inline void DesniPWM(unsigned int PWM)
     P1DC1 = PWM;
 }
 
+// inb2 = pin17, rb8 pwm
+// rb14, 25 pin ina1 pwm
+// 26 pin-> inb1 rb15
+// 23-> inh1 rb12
+// 22-> inh2 rb11
+// 18-> ina2 rb9
+
+
+
 // **********************************************************************
 // ODOMETRIJA (ide na 1ms)
 // **********************************************************************
-void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void)
+static volatile unsigned char brInt = 0;
+void __attribute__((__interrupt__, auto_psv)) _T1Interrupt(void)
 {
     sys_time++;
+
+    //if(++brInt == 3)
+   // {
+     //   brInt = 0;
+
 
     //CITANJE PODATAKA O POZICIJAMA OBA MOTORA:
     vR = (int)POS2CNT;	//ocitavamo broj inkremenata u zadnjoj periodi
@@ -77,7 +92,8 @@ void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void)
         teta += 32768;
 
     // tabela sinusa ima 8192 elemenata -> prvi kvadrant
-    d = vR + vL;	//ovo se kasnije deli sa 2
+    d = vR + vL;	//DODATO DELJENJE!!!
+    //d  = vR + vL;
     // uvek se svodi na prvi kvadrant!
     if(teta < 8192)
     {
@@ -106,50 +122,50 @@ void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void)
                 cost = sinus[t];
             }
 
-		// x, y -> predjeno po x i y koordinati u zadnjoj periodi (deltax, deltay)
-		x = d * cost;
-		y = d * sint;
+    // x, y -> predjeno po x i y koordinati u zadnjoj periodi (deltax, deltay)
+    x = d * cost;
+    y = d * sint;
 
-		// x, y je min 32767
-		Xlong += x;
-		Ylong += y;
+    // x, y je min 32767
+    Xlong += x;
+    Ylong += y;
 
-		//izacunavanje trenutne pozicije [mm]
-		// pre:
+    //izacunavanje trenutne pozicije [mm]
+    // pre:
 		
-		//X = (((long long)Xlong / 2) / 32768) / K2;
-		//Y = (((long long)Ylong / 2) / 32768) / K2;
+    //X = (((long long)Xlong / 2) / 32768) / K2;
+    //Y = (((long long)Ylong / 2) / 32768) / K2;
 		
 
-		// pretvaranje u inkremente
-		X = (((long long)Xlong / 2) / 32768);
-		// pretvaranje u milimetre
-		X /= K2;
-		Y = (((long long)Ylong / 2) / 32768);
-		Y /= K2;
+    // pretvaranje u inkremente
+    X = (((long long)Xlong) / 32768) / 2;
+    // pretvaranje u milimetre
+    X /= K2;
+    Y = (((long long)Ylong) / 32768) / 2;
+    Y /= K2;
 
-		//regulator rastojanja
-		brzina = (vL + vR) / 2; // srednja vrednost predjenih inkremenata u zadnjoj periodi -> v = s/t, brzina
-		greska = d_ref - L;
-		zaglavL = (greska >= 0 ? greska : -greska);
+    //regulator rastojanja
+    brzina = (vL + vR) / 2; // srednja vrednost predjenih inkremenata u zadnjoj periodi -> v = s/t, brzina
+    greska = d_ref - L;
+    zaglavL = (greska >= 0 ? greska : -greska);
 
-		commande_distance = greska * Gp_D - Gd_D * brzina;
+    commande_distance = greska * Gp_D - Gd_D * brzina;
 
-		//regulator orjentacije
-		brzina = vL - vR;
-		greska = (orientation - t_ref) % K1;
+    //regulator orjentacije
+    brzina = vL - vR;
+    greska = (orientation - t_ref) % K1;
 
-		if(greska > K1/2)
-			greska -= K1;
-		if(greska < -K1/2)
-			greska += K1;
+    if(greska > K1/2)
+	greska -= K1;
+    if(greska < -K1/2)
+	greska += K1;
 
-		zaglavR = (greska >= 0 ? greska : -greska);
-		commande_rotation = greska * Gp_T - brzina * Gd_T;
+    zaglavR = (greska >= 0 ? greska : -greska);
+    commande_rotation = greska * Gp_T - brzina * Gd_T;
 
-		// ukupan PWM dobija se superpozicijom uzimajuci u obzir oba regulatora
-		// commande_distance = regulator rastojanja
-		// commande_rotation = regulator orijentacije
+// ukupan PWM dobija se superpozicijom uzimajuci u obzir oba regulatora
+// commande_distance = regulator rastojanja
+// commande_rotation = regulator orijentacije
 
 
     PWML = commande_distance - commande_rotation;
@@ -166,6 +182,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void)
     else if(PWML >= 3200)
         PWML = 3200;
     //izbor smera:
+
     if(PWML >= 0)
     {
         LATBbits.LATB9 = 0;
@@ -189,14 +206,8 @@ void __attribute__((__interrupt__, no_auto_psv)) _T1Interrupt(void)
     }
 
    // }	//KRAJ REGULACIJE
-
+    //}
     IFS0bits.T1IF = 0;    /* Clear Timer interrupt flag */
-}
-
-void jebiSe(void)
-{
-    putch(positionL);
-    putch(positionR);
 }
 
 void resetDriver(void)
@@ -211,6 +222,17 @@ void resetDriver(void)
 
     setPosition(0, 0, 0);
     currentStatus = STATUS_IDLE;
+}
+
+void test(void)
+{
+    putch(positionL >> 8);
+    putch(positionL);
+    putch(13);
+    putch(10);
+    putch(positionR >> 8);
+    putch(positionR);
+
 }
 
 //zadavanje X koordinate
@@ -400,8 +422,8 @@ void gotoXY(int Xd, int Yd, unsigned char krajnja_brzina, char smer)
     int duzina, ugao;
     long long int Xdlong, Ydlong;
 
-    Xdlong = (long long)Xd * K2 * 65536;
-    Ydlong = (long long)Yd * K2 * 65536;
+    Xdlong = ((long long)Xd * K2 * 65536) / 2;
+    Ydlong = ((long long)Yd * K2 * 65536) / 2;
 
     v0 = v_ref;
     smer = (smer >= 0 ? 1 : -1);
@@ -428,8 +450,9 @@ void gotoXY(int Xd, int Yd, unsigned char krajnja_brzina, char smer)
     L_dist = (long)duzina * K2;
 
     T1 = (vmax - v_ref) / accel;
+
     L0 = L;
-    L1 = v_ref * T1 + accel * T1 * T1 / 2;
+    L1 = v_ref * T1 + accel * T1 * T1 / 2; // mozda sabrati sa L0
 
     T3 = (vmax - v_end) / accel;
     L3 = vmax * T3 - accel * T3 * T3 / 2;

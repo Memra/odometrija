@@ -94,8 +94,8 @@ int main(void)
     /* Configure PLL prescaler, PLL postscaler, PLL divisor */
 
     PLLFBDbits.PLLDIV = 30;   /* M = PLLFBD + 2 */
-    CLKDIVbits.PLLPOST=0;   /* N1 = 2 */
-    CLKDIVbits.PLLPRE=0;    /* N2 = 2 */
+    CLKDIVbits.PLLPOST = 0;   /* N1 = 2 */
+    CLKDIVbits.PLLPRE = 0;    /* N2 = 2 */
     //while (OSCCONbits.LOCK != 0b1);
     __builtin_write_OSCCONH(0b011);
     __builtin_write_OSCCONL (OSCCONL | (1<<0)); 	//OSWEN
@@ -122,7 +122,7 @@ int main(void)
     UART_Init(57600);
     QEIinit();
     CloseMCPWM();
-    //PWMinit();
+    PWMinit();
 
     resetDriver();
 
@@ -138,6 +138,10 @@ int main(void)
     
         switch(komanda)
         {
+
+            case 'X':
+                test();
+                break;
             // zadavanje pozicije
             case 'I':
                 tmpX = (getch() << 8) | getch();

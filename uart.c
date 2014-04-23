@@ -32,11 +32,6 @@ void UART_Init(long baud)
 
     __delay_ms(100);
 }
-/*
-void UART_Init(unsigned long baud)
-{
-    U1BRG = (double)FCY / (16 * baud) - 1;
-}*/
 
 /**********************************************************************
 * Function Name     : BusyUART1

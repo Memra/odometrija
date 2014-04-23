@@ -113,22 +113,22 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x682           0x9c3  (2499)
 .const                       0x882              0x4000          0x6000  (24576)
-.text                       0x4882              0x2a98          0x3fe4  (16356)
-.init.delay32               0x731a                0x1c            0x2a  (42)
-.dinit                      0x7336                0x1c            0x2a  (42)
+.text                       0x4882              0x2b0e          0x4095  (16533)
+.init.delay32               0x7390                0x1c            0x2a  (42)
+.dinit                      0x73ac                0x1c            0x2a  (42)
 
-                     Total program memory used (bytes):         0xa9fb  (43515) 33%
+                     Total program memory used (bytes):         0xaaac  (43692) 33%
 
 
 Data Memory  [Origin = 0x800, Length = 0x4000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0            0xa4  (164)
-.ndata                       0x8a4                   0             0x2  (2)
-.nbss                        0x8a6                   0             0x2  (2)
+.nbss                        0x800                   0            0xa6  (166)
+.ndata                       0x8a6                   0             0x2  (2)
+.nbss                        0x8a8                   0             0x2  (2)
 
-                        Total data memory used (bytes):           0xa8  (168) 1%
+                        Total data memory used (bytes):           0xaa  (170) 1%
 
 
 Dynamic Memory Usage
@@ -136,9 +136,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x8a8                              0x3f58  (16216)
+stack                        0x8aa                              0x3f56  (16214)
 
-                        Maximum dynamic memory (bytes):         0x3f58  (16216)
+                        Maximum dynamic memory (bytes):         0x3f56  (16214)
 
 
 External Symbols in Program Memory (by address):
@@ -179,82 +179,82 @@ External Symbols in Program Memory (by address):
                   0x00083e                  ___umuldi3
                   0x000882                  _sinus
                   0x00489a                  __T1Interrupt
-                  0x004e7a                  _jebiSe
-                  0x004e94                  _resetDriver
-                  0x005010                  _setPosition
-                  0x00502c                  _sendStatusAndPosition
-                  0x0050f2                  _setSpeedAccel
-                  0x005132                  _getStatus
-                  0x00513c                  _forceStatus
-                  0x005248                  _gotoXY
-                  0x0059ec                  _kretanje_pravo
-                  0x005f9e                  _apsolutni_ugao
-                  0x005ff2                  _okret
-                  0x00632e                  _kurva
-                  0x006984                  _stop
-                  0x00699e                  _setSpeed
-                  0x0069e4                  _UART_Init
-                  0x006a5c                  _BusyUART1
-                  0x006a74                  _CloseUART1
-                  0x006a84                  _ConfigIntUART1
-                  0x006afc                  _DataRdyUART1
-                  0x006b0c                  _getsUART1
-                  0x006b7c                  _OpenUART1
-                  0x006b94                  _putsUART1
-                  0x006bde                  _ReadUART1
-                  0x006bf8                  _WriteUART1
-                  0x006c14                  _putch
-                  0x006c34                  _SendLong
-                  0x006db6                  _NewLine
-                  0x006dc4                  __U1TXInterrupt
-                  0x006dd8                  __U1RXInterrupt
-                  0x006e5c                  _getch
-                  0x006eb2                  _UART_GetLastByte
-                  0x006ec6                  _UART_CheckRX
-                  0x006ed2                  _TimerInit
-                  0x006f02                  _QEIinit
-                  0x006f48                  _PortInit
-                  0x006f72                  _main
-                  0x00722e                  _PWMinit
-                  0x007262                  _CloseMCPWM
-                  0x007296                  _OpenMCPWM
-                  0x0072ba                  _OverrideMCPWM
-                  0x0072c6                  _SetDCMCPWM
-                  0x0072f6                  _SetMCPWMDeadTimeAssignment
-                  0x007302                  _SetMCPWMDeadTimeGeneration
-                  0x00730e                  _SetMCPWMFaultA
-                  0x00731a                  ___delay32
+                  0x004e82                  _resetDriver
+                  0x004ec2                  _test
+                  0x005048                  _setPosition
+                  0x005064                  _sendStatusAndPosition
+                  0x00512a                  _setSpeedAccel
+                  0x00516a                  _getStatus
+                  0x005174                  _forceStatus
+                  0x005280                  _gotoXY
+                  0x005a58                  _kretanje_pravo
+                  0x00600a                  _apsolutni_ugao
+                  0x00605e                  _okret
+                  0x00639c                  _kurva
+                  0x0069f4                  _stop
+                  0x006a0e                  _setSpeed
+                  0x006a54                  _UART_Init
+                  0x006acc                  _BusyUART1
+                  0x006ae4                  _CloseUART1
+                  0x006af4                  _ConfigIntUART1
+                  0x006b6c                  _DataRdyUART1
+                  0x006b7c                  _getsUART1
+                  0x006bec                  _OpenUART1
+                  0x006c04                  _putsUART1
+                  0x006c4e                  _ReadUART1
+                  0x006c68                  _WriteUART1
+                  0x006c84                  _putch
+                  0x006ca4                  _SendLong
+                  0x006e26                  _NewLine
+                  0x006e34                  __U1TXInterrupt
+                  0x006e48                  __U1RXInterrupt
+                  0x006ecc                  _getch
+                  0x006f22                  _UART_GetLastByte
+                  0x006f36                  _UART_CheckRX
+                  0x006f42                  _TimerInit
+                  0x006f72                  _QEIinit
+                  0x006fb8                  _PortInit
+                  0x006fe2                  _main
+                  0x0072a4                  _PWMinit
+                  0x0072d8                  _CloseMCPWM
+                  0x00730c                  _OpenMCPWM
+                  0x007330                  _OverrideMCPWM
+                  0x00733c                  _SetDCMCPWM
+                  0x00736c                  _SetMCPWMDeadTimeAssignment
+                  0x007378                  _SetMCPWMDeadTimeGeneration
+                  0x007384                  _SetMCPWMFaultA
+                  0x007390                  ___delay32
 
 External Symbols in Program Memory (by name):
 
-                  0x006a5c                  _BusyUART1
-                  0x007262                  _CloseMCPWM
-                  0x006a74                  _CloseUART1
-                  0x006a84                  _ConfigIntUART1
-                  0x006afc                  _DataRdyUART1
-                  0x006db6                  _NewLine
-                  0x007296                  _OpenMCPWM
-                  0x006b7c                  _OpenUART1
-                  0x0072ba                  _OverrideMCPWM
-                  0x00722e                  _PWMinit
-                  0x006f48                  _PortInit
-                  0x006f02                  _QEIinit
-                  0x006bde                  _ReadUART1
-                  0x006c34                  _SendLong
-                  0x0072c6                  _SetDCMCPWM
-                  0x0072f6                  _SetMCPWMDeadTimeAssignment
-                  0x007302                  _SetMCPWMDeadTimeGeneration
-                  0x00730e                  _SetMCPWMFaultA
-                  0x006ed2                  _TimerInit
-                  0x006ec6                  _UART_CheckRX
-                  0x006eb2                  _UART_GetLastByte
-                  0x0069e4                  _UART_Init
-                  0x006bf8                  _WriteUART1
+                  0x006acc                  _BusyUART1
+                  0x0072d8                  _CloseMCPWM
+                  0x006ae4                  _CloseUART1
+                  0x006af4                  _ConfigIntUART1
+                  0x006b6c                  _DataRdyUART1
+                  0x006e26                  _NewLine
+                  0x00730c                  _OpenMCPWM
+                  0x006bec                  _OpenUART1
+                  0x007330                  _OverrideMCPWM
+                  0x0072a4                  _PWMinit
+                  0x006fb8                  _PortInit
+                  0x006f72                  _QEIinit
+                  0x006c4e                  _ReadUART1
+                  0x006ca4                  _SendLong
+                  0x00733c                  _SetDCMCPWM
+                  0x00736c                  _SetMCPWMDeadTimeAssignment
+                  0x007378                  _SetMCPWMDeadTimeGeneration
+                  0x007384                  _SetMCPWMFaultA
+                  0x006f42                  _TimerInit
+                  0x006f36                  _UART_CheckRX
+                  0x006f22                  _UART_GetLastByte
+                  0x006a54                  _UART_Init
+                  0x006c68                  _WriteUART1
                   0x00489a                  __T1Interrupt
-                  0x006dd8                  __U1RXInterrupt
-                  0x006dc4                  __U1TXInterrupt
+                  0x006e48                  __U1RXInterrupt
+                  0x006e34                  __U1TXInterrupt
                   0x000296                  ___addsf3
-                  0x00731a                  ___delay32
+                  0x007390                  ___delay32
                   0x000454                  ___divsf3
                   0x0004d8                  ___divsi3
                   0x0004f6                  ___eqsf2
@@ -285,29 +285,29 @@ External Symbols in Program Memory (by name):
                   0x000670                  __funpack2
                   0x000226                  __psv_init
                   0x000200                  __resetPRI
-                  0x005f9e                  _apsolutni_ugao
+                  0x00600a                  _apsolutni_ugao
                   0x000350                  _atan2f
                   0x00038a                  _atanf
-                  0x00513c                  _forceStatus
-                  0x005132                  _getStatus
-                  0x006e5c                  _getch
-                  0x006b0c                  _getsUART1
-                  0x005248                  _gotoXY
-                  0x004e7a                  _jebiSe
-                  0x0059ec                  _kretanje_pravo
-                  0x00632e                  _kurva
-                  0x006f72                  _main
-                  0x005ff2                  _okret
-                  0x006c14                  _putch
-                  0x006b94                  _putsUART1
-                  0x004e94                  _resetDriver
-                  0x00502c                  _sendStatusAndPosition
-                  0x005010                  _setPosition
-                  0x00699e                  _setSpeed
-                  0x0050f2                  _setSpeedAccel
+                  0x005174                  _forceStatus
+                  0x00516a                  _getStatus
+                  0x006ecc                  _getch
+                  0x006b7c                  _getsUART1
+                  0x005280                  _gotoXY
+                  0x005a58                  _kretanje_pravo
+                  0x00639c                  _kurva
+                  0x006fe2                  _main
+                  0x00605e                  _okret
+                  0x006c84                  _putch
+                  0x006c04                  _putsUART1
+                  0x004e82                  _resetDriver
+                  0x005064                  _sendStatusAndPosition
+                  0x005048                  _setPosition
+                  0x006a0e                  _setSpeed
+                  0x00512a                  _setSpeedAccel
                   0x000882                  _sinus
                   0x000726                  _sqrtf
-                  0x006984                  _stop
+                  0x0069f4                  _stop
+                  0x004ec2                  _test
 
 Memory Configuration
 
@@ -497,27 +497,27 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x4cdf
+.debug_info       0x000000       0x4cf3
  *(.debug_info)
  .debug_info      0x000000       0x1c48 build/default/production/_ext/1472/main.o
  .debug_info      0x001c48       0x1281 build/default/production/_ext/1472/uart.o
  .debug_info      0x002ec9        0xd49 build/default/production/_ext/1472/pwm.o
- .debug_info      0x003c12       0x10cd build/default/production/_ext/1472/regulacija.o
+ .debug_info      0x003c12       0x10e1 build/default/production/_ext/1472/regulacija.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x5e3
+.debug_abbrev     0x000000        0x5f8
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x131 build/default/production/_ext/1472/main.o
  .debug_abbrev    0x000131        0x1de build/default/production/_ext/1472/uart.o
  .debug_abbrev    0x00030f         0xed build/default/production/_ext/1472/pwm.o
- .debug_abbrev    0x0003fc        0x1e7 build/default/production/_ext/1472/regulacija.o
+ .debug_abbrev    0x0003fc        0x1fc build/default/production/_ext/1472/regulacija.o
 
-.debug_line       0x000000       0x1c98
+.debug_line       0x000000       0x1cd3
  *(.debug_line)
- .debug_line      0x000000        0x4c7 build/default/production/_ext/1472/main.o
- .debug_line      0x0004c7        0x5e2 build/default/production/_ext/1472/uart.o
- .debug_line      0x000aa9        0x286 build/default/production/_ext/1472/pwm.o
- .debug_line      0x000d2f        0xf69 build/default/production/_ext/1472/regulacija.o
+ .debug_line      0x000000        0x4df build/default/production/_ext/1472/main.o
+ .debug_line      0x0004df        0x5df build/default/production/_ext/1472/uart.o
+ .debug_line      0x000abe        0x286 build/default/production/_ext/1472/pwm.o
+ .debug_line      0x000d44        0xf8f build/default/production/_ext/1472/regulacija.o
 
 .debug_frame      0x000000        0x390
  *(.debug_frame)
@@ -540,7 +540,7 @@ __FUID3
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x338
+                  0x000000        0x336
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x6d build/default/production/_ext/1472/main.o
@@ -549,7 +549,7 @@ __FUID3
  .debug_pubnames
                   0x00018e         0xad build/default/production/_ext/1472/pwm.o
  .debug_pubnames
-                  0x00023b         0xfd build/default/production/_ext/1472/regulacija.o
+                  0x00023b         0xfb build/default/production/_ext/1472/regulacija.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -585,8 +585,8 @@ __FUID3
                   0x000024          0x4 LONG 0x0 DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000026          0x4 LONG 0x0 DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000028          0x4 LONG 0x0 DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00002a          0x4 LONG 0x6dd8 DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00002c          0x4 LONG 0x6dc4 DEFINED (__U1TXInterrupt)?ABSOLUTE (__U1TXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00002a          0x4 LONG 0x6e48 DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00002c          0x4 LONG 0x6e34 DEFINED (__U1TXInterrupt)?ABSOLUTE (__U1TXInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00002e          0x4 LONG 0x0 DEFINED (__ADC1Interrupt)?ABSOLUTE (__ADC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000030          0x4 LONG 0x0 DEFINED (__DMA1Interrupt)?ABSOLUTE (__DMA1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000032          0x4 LONG 0x0 DEFINED (__Interrupt15)?ABSOLUTE (__Interrupt15):ABSOLUTE (__DefaultInterrupt)
@@ -713,8 +713,8 @@ __FUID3
                   0x000124          0x4 LONG 0x0 DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000126          0x4 LONG 0x0 DEFINED (__AltSPI1ErrInterrupt)?ABSOLUTE (__AltSPI1ErrInterrupt):DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000128          0x4 LONG 0x0 DEFINED (__AltSPI1Interrupt)?ABSOLUTE (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00012a          0x4 LONG 0x6dd8 DEFINED (__AltU1RXInterrupt)?ABSOLUTE (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00012c          0x4 LONG 0x6dc4 DEFINED (__AltU1TXInterrupt)?ABSOLUTE (__AltU1TXInterrupt):DEFINED (__U1TXInterrupt)?ABSOLUTE (__U1TXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00012a          0x4 LONG 0x6e48 DEFINED (__AltU1RXInterrupt)?ABSOLUTE (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
+                  0x00012c          0x4 LONG 0x6e34 DEFINED (__AltU1TXInterrupt)?ABSOLUTE (__AltU1TXInterrupt):DEFINED (__U1TXInterrupt)?ABSOLUTE (__U1TXInterrupt):ABSOLUTE (__DefaultInterrupt)
                   0x00012e          0x4 LONG 0x0 DEFINED (__AltADC1Interrupt)?ABSOLUTE (__AltADC1Interrupt):DEFINED (__ADC1Interrupt)?ABSOLUTE (__ADC1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000130          0x4 LONG 0x0 DEFINED (__AltDMA1Interrupt)?ABSOLUTE (__AltDMA1Interrupt):DEFINED (__DMA1Interrupt)?ABSOLUTE (__DMA1Interrupt):ABSOLUTE (__DefaultInterrupt)
                   0x000132          0x4 LONG 0x0 DEFINED (__AltInterrupt15)?ABSOLUTE (__AltInterrupt15):DEFINED (__Interrupt15)?ABSOLUTE (__Interrupt15):ABSOLUTE (__DefaultInterrupt)
@@ -1987,75 +1987,75 @@ __c30_signature
  __c30_signature
                   0x0005c8          0x6 /opt/microchip/xc16/v1.20/bin/bin/../../lib/libm-elf.a(umuldi3.eo)
 
-.nbss               0x0800         0xa4
- .nbss              0x0800         0x8e build/default/production/_ext/1472/regulacija.o
- .nbss              0x088e         0x16 build/default/production/_ext/1472/uart.o
+.nbss               0x0800         0xa6
+ .nbss              0x0800         0x90 build/default/production/_ext/1472/regulacija.o
+ .nbss              0x0890         0x16 build/default/production/_ext/1472/uart.o
 
-.ndata              0x08a4          0x2
- .ndata             0x08a4          0x2 build/default/production/_ext/1472/regulacija.o
+.ndata              0x08a6          0x2
+ .ndata             0x08a6          0x2 build/default/production/_ext/1472/regulacija.o
 
-.nbss               0x08a6          0x2
- .nbss              0x08a6          0x2 /opt/microchip/xc16/v1.20/bin/bin/../../lib/libm-elf.a(errno.eo)
-                    0x08a6                  _errno
+.nbss               0x08a8          0x2
+ .nbss              0x08a8          0x2 /opt/microchip/xc16/v1.20/bin/bin/../../lib/libm-elf.a(errno.eo)
+                    0x08a8                  _errno
 
 .const              0x8882       0x4000 load address 0x000882  
  .const             0x8882       0x4000 build/default/production/_ext/1472/regulacija.o
                     0x8882                  _sinus
 
-.text             0x004882       0x2a98
- .text            0x004882       0x2162 build/default/production/_ext/1472/regulacija.o
+.text             0x004882       0x2b0e
+ .text            0x004882       0x21d2 build/default/production/_ext/1472/regulacija.o
                   0x00489a                  __T1Interrupt
-                  0x004e7a                  _jebiSe
-                  0x004e94                  _resetDriver
-                  0x005010                  _setPosition
-                  0x00502c                  _sendStatusAndPosition
-                  0x0050f2                  _setSpeedAccel
-                  0x005132                  _getStatus
-                  0x00513c                  _forceStatus
-                  0x005248                  _gotoXY
-                  0x0059ec                  _kretanje_pravo
-                  0x005f9e                  _apsolutni_ugao
-                  0x005ff2                  _okret
-                  0x00632e                  _kurva
-                  0x006984                  _stop
-                  0x00699e                  _setSpeed
- .text            0x0069e4        0x4ee build/default/production/_ext/1472/uart.o
-                  0x0069e4                  _UART_Init
-                  0x006a5c                  _BusyUART1
-                  0x006a74                  _CloseUART1
-                  0x006a84                  _ConfigIntUART1
-                  0x006afc                  _DataRdyUART1
-                  0x006b0c                  _getsUART1
-                  0x006b7c                  _OpenUART1
-                  0x006b94                  _putsUART1
-                  0x006bde                  _ReadUART1
-                  0x006bf8                  _WriteUART1
-                  0x006c14                  _putch
-                  0x006c34                  _SendLong
-                  0x006db6                  _NewLine
-                  0x006dc4                  __U1TXInterrupt
-                  0x006dd8                  __U1RXInterrupt
-                  0x006e5c                  _getch
-                  0x006eb2                  _UART_GetLastByte
-                  0x006ec6                  _UART_CheckRX
- .text            0x006ed2        0x35c build/default/production/_ext/1472/main.o
-                  0x006ed2                  _TimerInit
-                  0x006f02                  _QEIinit
-                  0x006f48                  _PortInit
-                  0x006f72                  _main
- .text            0x00722e         0xec build/default/production/_ext/1472/pwm.o
-                  0x00722e                  _PWMinit
-                  0x007262                  _CloseMCPWM
-                  0x007296                  _OpenMCPWM
-                  0x0072ba                  _OverrideMCPWM
-                  0x0072c6                  _SetDCMCPWM
-                  0x0072f6                  _SetMCPWMDeadTimeAssignment
-                  0x007302                  _SetMCPWMDeadTimeGeneration
-                  0x00730e                  _SetMCPWMFaultA
+                  0x004e82                  _resetDriver
+                  0x004ec2                  _test
+                  0x005048                  _setPosition
+                  0x005064                  _sendStatusAndPosition
+                  0x00512a                  _setSpeedAccel
+                  0x00516a                  _getStatus
+                  0x005174                  _forceStatus
+                  0x005280                  _gotoXY
+                  0x005a58                  _kretanje_pravo
+                  0x00600a                  _apsolutni_ugao
+                  0x00605e                  _okret
+                  0x00639c                  _kurva
+                  0x0069f4                  _stop
+                  0x006a0e                  _setSpeed
+ .text            0x006a54        0x4ee build/default/production/_ext/1472/uart.o
+                  0x006a54                  _UART_Init
+                  0x006acc                  _BusyUART1
+                  0x006ae4                  _CloseUART1
+                  0x006af4                  _ConfigIntUART1
+                  0x006b6c                  _DataRdyUART1
+                  0x006b7c                  _getsUART1
+                  0x006bec                  _OpenUART1
+                  0x006c04                  _putsUART1
+                  0x006c4e                  _ReadUART1
+                  0x006c68                  _WriteUART1
+                  0x006c84                  _putch
+                  0x006ca4                  _SendLong
+                  0x006e26                  _NewLine
+                  0x006e34                  __U1TXInterrupt
+                  0x006e48                  __U1RXInterrupt
+                  0x006ecc                  _getch
+                  0x006f22                  _UART_GetLastByte
+                  0x006f36                  _UART_CheckRX
+ .text            0x006f42        0x362 build/default/production/_ext/1472/main.o
+                  0x006f42                  _TimerInit
+                  0x006f72                  _QEIinit
+                  0x006fb8                  _PortInit
+                  0x006fe2                  _main
+ .text            0x0072a4         0xec build/default/production/_ext/1472/pwm.o
+                  0x0072a4                  _PWMinit
+                  0x0072d8                  _CloseMCPWM
+                  0x00730c                  _OpenMCPWM
+                  0x007330                  _OverrideMCPWM
+                  0x00733c                  _SetDCMCPWM
+                  0x00736c                  _SetMCPWMDeadTimeAssignment
+                  0x007378                  _SetMCPWMDeadTimeGeneration
+                  0x007384                  _SetMCPWMFaultA
 
-.init.delay32     0x00731a         0x1c
- .init.delay32    0x00731a         0x1c /opt/microchip/xc16/v1.20/bin/bin/../../lib/libpic30-elf.a(delay32.eo)
-                  0x00731a                  ___delay32
+.init.delay32     0x007390         0x1c
+ .init.delay32    0x007390         0x1c /opt/microchip/xc16/v1.20/bin/bin/../../lib/libpic30-elf.a(delay32.eo)
+                  0x007390                  ___delay32
 
-.dinit            0x007336         0x1c
- .dinit           0x007336         0x1c data_init
+.dinit            0x0073ac         0x1c
+ .dinit           0x0073ac         0x1c data_init
